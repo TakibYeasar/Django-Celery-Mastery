@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+
+  redis:
+    image: redis:7.0.11-alpine
+
+  django:
+    container_name: django
+    build:
+      context: .  # Set build context to the root directory
+      dockerfile: dcelery/Dockerfile  # Point to the Dockerfile inside the `dcelery` folder
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./dcelery:/usr/src/app  # Mount `dcelery` folder
+    ports:
+      - "8001:8000"
+    environment:
+      DEBUG: "1"
+      SECRET_KEY: "0901s54f4g512s1fg545f4sg"
+      ALLOWED_HOSTS: "localhost,127.0.0.1"
+    depends_on:
+      - redis
+
+  celery:
+    container_name: celery
+    build:
+      context: .  # Set build context to the root directory
+      dockerfile: dcelery/Dockerfile  # Point to the Dockerfile inside the `dcelery` folder
+    volumes:
+      - ./dcelery:/usr/src/app  # Mount `dcelery` folder
+    ports:
+      - "8001:8000"
+    environment:
+      DEBUG: "1"
+      SECRET_KEY: "0901s54f4g512s1fg545f4sg"
+      ALLOWED_HOSTS: "localhost,127.0.0.1"
+    depends_on:
+      - redis
+
+
