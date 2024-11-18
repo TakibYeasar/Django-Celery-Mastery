@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "django celery mastery with very academy"
+name = "django celery mastery"
 version = "0.1.0"
 description = ""
 authors = ["Takib Yeasar <mdtakibyeasar@gmail.com>"]

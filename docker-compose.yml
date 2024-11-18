@@ -27,6 +27,7 @@ services:
     build:
       context: .  # Set build context to the root directory
       dockerfile: dcelery/Dockerfile  # Point to the Dockerfile inside the `dcelery` folder
+    command: celery --app=dcelery worker -l INFO
     volumes:
       - ./dcelery:/usr/src/app  # Mount `dcelery` folder
     ports:
